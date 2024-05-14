@@ -33,6 +33,13 @@ class Application(tk.Tk):
             writer.writerow(
                 [self.user.username, self.user.role, action, timestamp])
 
+    def log_usage_invalid_login(self, action):
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with open(self.usage_log_file, "a", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(
+                ['Invalid User', 'No Role', action, timestamp])
+
     def setup_ui(self):
         self.login_frame = tk.Frame(self)
         self.login_frame.pack(fill="both", expand=True)
@@ -56,8 +63,10 @@ class Application(tk.Tk):
 
         if self.user is None:
             messagebox.showerror("Error", "Invalid credentials.")
+            self.log_usage_invalid_login("Unsuccessful Login")
         else:
             self.patient_records = PatientRecord(self.patients_file)
+            self.log_usage("Successful Login")
             self.show_menu()
 
     def show_menu(self):
