@@ -83,7 +83,7 @@ class Application(tk.Tk):
         else:
             messagebox.showerror("Error", "Unauthorized role.")
 
-        tk.Button(self.menu_frame, text="Logout",
+        tk.Button(self.menu_frame, text="LOGOUT",
                   command=self.logout).pack(pady=10)
 
     def generate_key_statistics(self):
